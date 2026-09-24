@@ -157,7 +157,9 @@ startgame = 0;
 };
 
 // Create Player Group
-GRLIB_player_group = createGroup [GRLIB_side_friendly, true];
+waitUntil { sleep 0.1; !isNil "LRX_shared_player_group" };
+GRLIB_player_group = LRX_shared_player_group;
+[player] joinSilent GRLIB_player_group;
 [GRLIB_player_group, "add"] remoteExec ["addel_group_remote_call", 2];
 waitUntil { sleep 1; player getVariable ["GRLIB_score_set", 0] == 1 && player in (units GRLIB_player_group) };
 

@@ -23,14 +23,9 @@ switch (squadaction) do {
 		};
 	};
 
-	case "leave" : {
-		if (leader _grp_player != player) then {
-			GRLIB_player_group = createGroup [GRLIB_side_friendly, true];
-			[GRLIB_player_group, "add"] remoteExec ["addel_group_remote_call", 2];
-			[player] joinSilent GRLIB_player_group;
-			hint "New Squad created";
-		};
-	};
+case "leave" : {
+    hint "Leaving the squad is disabled on this server.";
+};
 
 	case "lock" : {
 		if (_grp == _grp_player) then {

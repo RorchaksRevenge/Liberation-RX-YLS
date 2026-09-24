@@ -94,7 +94,7 @@ while {true} do {
 				_msg = format ["DETECTED!!<br/><t color='#0000FF'>%1</t> you go back to <t color='#004C99'>BLUFOR</t> side...", name player];
 				[_msg, 0, 0, 10, 0, 0, 90] spawn BIS_fnc_dynamicText;
 				_player_units = (units GRLIB_player_group);
-				GRLIB_player_group = createGroup [GRLIB_side_friendly, true];
+				GRLIB_player_group = LRX_shared_player_group;
 				waitUntil {
 					[player] joinSilent GRLIB_player_group;
 					sleep 0.5;

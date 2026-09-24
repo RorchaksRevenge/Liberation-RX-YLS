@@ -155,6 +155,8 @@ if (abort_loading) exitWith { abort_loading_msg = format [
 // SIDES
 GRLIB_side_civilian = CIVILIAN;
 GRLIB_side_friendly = ({if (_x select 0 == GRLIB_mod_west) exitWith {_x select 2}} forEach GRLIB_mod_list_name);
+LRX_shared_player_group = createGroup [GRLIB_side_friendly, false];
+publicVariable "LRX_shared_player_group";
 GRLIB_side_enemy = ({if (_x select 0 == GRLIB_mod_east) exitWith {_x select 2}} forEach GRLIB_mod_list_name);
 if (GRLIB_side_verif == 1 && GRLIB_side_friendly == GRLIB_side_enemy) then {
 	GRLIB_side_enemy = ([WEST, EAST, INDEPENDENT] - [GRLIB_side_friendly]) select 0;
