@@ -37,7 +37,7 @@ if (_rank in ["Colonel", "Super Colonel"]) then { _iscommandant = true };
 ctrlSetText [1011, format ["%1 - %2", _title, _rank]];
 ctrlShow [ 108, _iscommandant ];
 ctrlShow [ 1085, _iscommandant ];
-if (count squads == 0) then {
+if (count squads == 0 || GRLIB_max_squad_size == 0) then {
 	ctrlShow [ 108, false ];
 	ctrlShow [ 1085, false ];
 };
@@ -96,6 +96,9 @@ while { dialog && alive player && (dobuild == 0 || buildtype in [GRLIB_InfantryB
 
 		if (!_squad_leader && buildtype in [GRLIB_InfantryBuildType,GRLIB_SquadBuildType]) then {
 			_msg = "       Only for Squad Leader.";
+		};
+		if (GRLIB_max_squad_size == 0 && buildtype in [GRLIB_InfantryBuildType,GRLIB_SquadBuildType]) then {
+			_msg = "       Disabled.";
 		};
 		if (_near_outpost && buildtype in [GRLIB_CombatVehicleBuildType,GRLIB_AerialBuildType,GRLIB_SquadBuildType]) then {
 			_msg = "       Unavailable at Outpost.";
@@ -213,7 +216,7 @@ while { dialog && alive player && (dobuild == 0 || buildtype in [GRLIB_InfantryB
 						hintSilent localize "STR_TOO_MANY_SPAWN";
 						_affordable = false;
 					};
-					if (GRLIB_allow_redeploy == 0) then {
+					if (GRLIB_allow_redeploy != 1) then {
 						_affordable = false;
 					};
 				};

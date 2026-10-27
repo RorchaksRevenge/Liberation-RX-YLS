@@ -107,7 +107,7 @@ GRLIB_checkBuildDef = {
 };
 
 GRLIB_checkSquadMgmt = {
-	(GRLIB_player_is_menuok && (leader group player == player) && (count units group player > 1) && (GRLIB_player_near_fob || GRLIB_player_near_lhd))
+	(GRLIB_player_is_menuok && (leader group player == player) && (count units group player > 1) && (GRLIB_player_near_fob || GRLIB_player_near_lhd) && GRLIB_max_squad_size > 0)
 };
 
 GRLIB_checkSecObj = {

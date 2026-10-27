@@ -1,4 +1,4 @@
-if (GRLIB_allow_redeploy == 0) exitWith {[]};
+if (GRLIB_allow_redeploy != 1) exitWith {[]};
 if (isNil "GRLIB_mobile_respawn") exitWith {[]};
 
 // Filter mobile respawns
