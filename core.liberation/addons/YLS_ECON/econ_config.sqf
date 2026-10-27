@@ -7,6 +7,9 @@ YLS_crate_half = [0.64, 0.84, 0.53];	// half the crate height (m)
 YLS_crate_value = 100;					// resource units in a full crate
 YLS_crate_mass = 500;					// KP uses 500 so a helicopter can sling a crate
 
+// Version of the saved economy format. Raise it when the format changes; the loader still reads older ones.
+YLS_save_version = 1;
+
 // Storage: a small sand ContainmentArea holds 12 crates in a 4 x 3 grid.
 YLS_storage_class = "ContainmentArea_02_sand_F";
 YLS_storage_top = 0.24;					// top of the slab above its origin (m)

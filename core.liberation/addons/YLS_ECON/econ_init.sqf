@@ -6,6 +6,8 @@ if (!isServer) exitWith {};
 [] call compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_config.sqf";
 
 YLS_stockpile = createHashMap;
+YLS_fob_pos = createHashMap;		// FOB key -> the position it was registered with (the save needs it)
+YLS_save_seq = 0;
 publicVariable "YLS_econ_types";
 publicVariable "YLS_stockpile";
 
@@ -24,5 +26,14 @@ YLS_fnc_storePlace = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\sto
 YLS_fnc_storeAttach = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\store_attach.sqf";
 YLS_fnc_storePack = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\store_pack.sqf";
 YLS_fnc_storeRecalc = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\store_recalc.sqf";
+
+YLS_fnc_econRound = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_round.sqf";
+YLS_fnc_econSaveKey = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_save_key.sqf";
+YLS_fnc_econSnapshot = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_snapshot.sqf";
+YLS_fnc_econSaveValid = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_save_valid.sqf";
+YLS_fnc_econSave = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_save.sqf";
+YLS_fnc_econSaveCheck = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_save_check.sqf";
+YLS_fnc_econLoad = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_load.sqf";
+YLS_fnc_econWipe = compileFinal preprocessFileLineNumbers "addons\YLS_ECON\econ_wipe.sqf";
 
 diag_log "--- YLS Econ: stockpile ready";

@@ -12,6 +12,7 @@ if (_key == "") exitWith {
 isNil {
 	if !(_key in YLS_stockpile) then {
 		YLS_stockpile set [_key, [0, 0, 0]];
+		YLS_fob_pos set [_key, +_fob];
 		publicVariable "YLS_stockpile";
 		diag_log format ["--- YLS Econ: FOB %1 registered", _key];
 	};

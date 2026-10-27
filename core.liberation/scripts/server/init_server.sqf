@@ -120,6 +120,9 @@ if (abort_loading) exitWith {
 	publicVariable "abort_loading_msg";
 };
 
+// YLS economy: restore the crates and stockpiles
+isNil { [] call YLS_fnc_econLoad };
+
 // Execute server Managers
 [] execVM "scripts\server\game\synchronise_vars.sqf";
 [] execVM "scripts\server\game\apply_saved_scores.sqf";

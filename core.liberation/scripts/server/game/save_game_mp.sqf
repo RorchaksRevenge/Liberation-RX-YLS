@@ -51,6 +51,7 @@ if (GRLIB_endgame >= 1 || GRLIB_global_stop == 1) then {
 		0,
 		GRLIB_player_scores
 	];
+	isNil { [] call YLS_fnc_econWipe };
 	profileNamespace setVariable [GRLIB_save_key, _savegame];
 	saveProfileNamespace;
 } else {
@@ -222,8 +223,10 @@ if (GRLIB_endgame >= 1 || GRLIB_global_stop == 1) then {
 	];
 
 	profileNamespace setVariable [GRLIB_save_key, _lrx_liberation_savegame];
+	isNil { [] call YLS_fnc_econSave };
 	saveProfileNamespace;
 	diag_log format ["--- LRX Save %1 in Profile at %2", GRLIB_save_key, time];
+	isNil { [] call YLS_fnc_econSaveCheck };
 };
 
 GRLIB_save_in_progress = nil;
