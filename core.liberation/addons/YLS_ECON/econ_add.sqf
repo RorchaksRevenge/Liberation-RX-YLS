@@ -1,5 +1,6 @@
-// Add to one FOB's stockpile (server only). Returns the new balance of that type, or -1 on bad input.
-// [getPos _fob, "supplies", 100, "crate delivered"] call YLS_fnc_econAdd
+// Add resources to a FOB (server only): crates of up to YLS_crate_value appear in its storage.
+// Returns the FOB's new balance of that type, or -1 if refused (bad input, no storage, or not enough free slots).
+// [getPos _fob, "supplies", 250, "production"] call YLS_fnc_econAdd
 if (!isServer) exitWith { -1 };
 params [["_fob", []], ["_type", ""], ["_amount", 0], ["_reason", ""]];
 
@@ -20,14 +21,35 @@ if (typeName _amount != "SCALAR" || { _amount <= 0 }) exitWith {
 	-1
 };
 
-private _balance = -1;
-isNil {
-	private _have = +(YLS_stockpile get _key);
-	_balance = (_have select _idx) + _amount;
-	_have set [_idx, _balance];
-	YLS_stockpile set [_key, _have];
-	publicVariable "YLS_stockpile";
+private _storages = [_fob] call YLS_fnc_storeFind;
+if (_storages isEqualTo []) exitWith {
+	diag_log format ["--- YLS Econ: FOB %1 add %2 +%3 REFUSED, no storage (%4)", _key, _type, _amount, _reason];
+	-1
 };
 
-diag_log format ["--- YLS Econ: FOB %1 add %2 +%3 -> %4 (%5)", _key, _type, _amount, _balance, _reason];
+private _balance = -1;
+isNil {
+	private _free = 0;
+	{ _free = _free + (count YLS_storage_slots) - (count ([_x] call YLS_fnc_storeCrates)) } forEach _storages;
+
+	if (_free >= ceil (_amount / YLS_crate_value)) then {
+		private _left = _amount;
+		{
+			private _st = _x;
+			while { _left > 0 && { count ([_st] call YLS_fnc_storeCrates) < count YLS_storage_slots } } do {
+				private _v = _left min YLS_crate_value;
+				private _crate = [_type, _v, (getPosATL _st) vectorAdd [0, 0, 2]] call YLS_fnc_crateCreate;
+				[_crate, _st] call YLS_fnc_storeAttach;
+				_left = _left - _v;
+			};
+		} forEach _storages;
+		_balance = ([_fob] call YLS_fnc_storeRecalc) select _idx;
+	};
+};
+
+if (_balance < 0) then {
+	diag_log format ["--- YLS Econ: FOB %1 add %2 +%3 REFUSED, storage full (%4)", _key, _type, _amount, _reason];
+} else {
+	diag_log format ["--- YLS Econ: FOB %1 add %2 +%3 -> %4 (%5)", _key, _type, _amount, _balance, _reason];
+};
 _balance
